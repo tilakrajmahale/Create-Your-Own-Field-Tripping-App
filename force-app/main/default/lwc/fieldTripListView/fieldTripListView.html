@@ -1,0 +1,67 @@
+<template>
+    
+    <div class="slds-grid slds-gutters_medium slds-grid_vertical-align-end slds-p-left_xx-large slds-p-right_xx-large slds-p-bottom_xx-large">
+        <div class="slds-col slds-size_10-of-12">
+          <span>
+            <lightning-combobox
+                    name="Field Trip Name"
+                    label="Field Trip Name"
+                    value=""
+                    placeholder="Field Trip Name"
+                    options={options}
+                    onchange={handleChange}
+            ></lightning-combobox>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-12">
+            <span>
+                <lightning-button 
+                    variant="Neutral"
+                    label="Refresh" 
+                    onclick={refreshComponent}
+                    icon-name="utility:refresh"
+                ></lightning-button>
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-12">
+            <span>
+              <lightning-button 
+                  variant="destructive" 
+                  label="Delete" 
+                  title="Primary action" 
+                  onclick={handleDelete} 
+                  icon-name="utility:delete"
+                  class="slds-m-left_x-small"
+              ></lightning-button>
+            </span>
+        </div>
+    </div>
+
+    <div>
+        <template if:true={fieldTripRecords}>
+            <lightning-datatable 
+                data={fieldTripRecords} 
+                columns={columns} 
+                key-field="Id"
+                sorted-by={sortBy}
+                sorted-direction={sortDirection}
+                onsort={doSorting}
+                show-row-number-column
+                hide-checkbox-column
+                class="slds-table_bordered slds-table_col-bordered"
+            ></lightning-datatable>
+        </template>
+        <template if:true={error}>
+            {error}
+        </template>
+    </div>
+
+    <div if:true={tableSpinner} class="slds-spinner_inline spinner-padding">
+        <lightning-spinner 
+            variant="brand" 
+            alternative-text="Loading Cases"     
+            size="medium"
+        ></lightning-spinner>
+    </div>
+
+</template>
